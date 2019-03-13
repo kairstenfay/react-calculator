@@ -26,10 +26,16 @@ export default class Calculator extends Component {
     }
 
     displayNumber(e) {
-        console.log('clicked');
-        this.setState({
-            displayText: CONSTANTS.numbers.indexOf(e.target.id)
-        })
+        if (this.state.displayText !== 0) {
+            this.setState({
+                displayText: "" + this.state.displayText + CONSTANTS.numbers.indexOf(e.target.id)
+            });
+        } else {
+            this.setState({
+                displayText: CONSTANTS.numbers.indexOf(e.target.id)
+            })
+        }
+
     }
 
     /**
@@ -40,7 +46,8 @@ export default class Calculator extends Component {
         let number_buttons = [];
         for (let i = CONSTANTS.numbers.length - 1; i >= 0; i--) {
             number_buttons.push(
-                <Button key={CONSTANTS.numbers[i]} text={CONSTANTS.numbers[i]} number={i} eventHandler={this.displayNumber} />
+                <Button key={CONSTANTS.numbers[i]} text={CONSTANTS.numbers[i]} number={i}
+                        eventHandler={this.displayNumber} />
             );
         }
         return number_buttons;
@@ -64,7 +71,7 @@ export default class Calculator extends Component {
                     <div id="decimal" className="button">
                         .
                     </div>
-                    <Clear onClick={this.clearState} />
+                    <Clear eventHandler={this.clearState} />
                 </div>
             </div>
         );
