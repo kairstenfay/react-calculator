@@ -10,26 +10,43 @@ export default class Calculator extends Component {
         super(props);
         this.state = {
             displayText: 0,
+            immediateExecutionLogic: 0
         };
-        // this.eventHandler = this.eventHandler.bind(this);
+        this.clearState = this.clearState.bind(this);
+        this.displayNumber = this.displayNumber.bind(this);
+        this.buildNumberButtons = this.buildNumberButtons.bind(this);
+
     }
 
-    render() {
+    clearState() {
+        this.setState({
+            displayText: 0,
+            immediateExecutionLogic: 0
+        })
+    }
 
-        let operand_buttons = [];
-        for (let i in Object.keys(CONSTANTS.operands)) {
-            const op = Object.keys(CONSTANTS.operands)[i];
-            operand_buttons.push(
-                <Operand key={op} id={op} operand={CONSTANTS.operands[op]} />
-            )
-        }
-        
+    displayNumber(e) {
+        console.log('clicked');
+        this.setState({
+            displayText: CONSTANTS.numbers.indexOf(e.target.id)
+        })
+    }
+
+    /**
+     * Move to actions
+     * @returns {Array}
+     */
+     buildNumberButtons() {
         let number_buttons = [];
         for (let i = CONSTANTS.numbers.length - 1; i >= 0; i--) {
             number_buttons.push(
-                <Button key={CONSTANTS.numbers[i]} number={i} />
+                <Button key={CONSTANTS.numbers[i]} text={CONSTANTS.numbers[i]} number={i} eventHandler={this.displayNumber} />
             );
         }
+        return number_buttons;
+    }
+
+    render() {
 
         return (
             <div id="calculator">
@@ -38,19 +55,35 @@ export default class Calculator extends Component {
                 </div>
 
                 <div id="buttons">
-                    {operand_buttons}
+                    {build_operand_buttons()}
 
                     <div id="equals" className="button">
                         =
                     </div>
-                    {number_buttons}
+                    {this.buildNumberButtons()}
                     <div id="decimal" className="button">
                         .
                     </div>
-                    <Clear />
+                    <Clear onClick={this.clearState} />
                 </div>
             </div>
         );
     }
 
 }
+
+/**
+ *
+ * @returns {Array}
+ */
+function build_operand_buttons() {
+    let operand_buttons = [];
+    for (let i in Object.keys(CONSTANTS.operands)) {
+        const op = Object.keys(CONSTANTS.operands)[i];
+        operand_buttons.push(
+            <Operand key={op} id={op} operand={CONSTANTS.operands[op]} />
+        )
+    }
+    return operand_buttons;
+}
+
