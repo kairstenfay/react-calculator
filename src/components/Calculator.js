@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Operand from '../components/Operand';
 import Button from '../components/Button';
+import Clear from '../components/Clear';
+const CONSTANTS = require('../constants.js');
 
 export default class Calculator extends Component {
 
@@ -13,23 +15,19 @@ export default class Calculator extends Component {
     }
 
     render() {
-        const constants = ["zero", "one", "two", "three", "four",
-            "five", "six", "seven", "eight", "nine"];
-
-        const operands = {add: '+', subtract: '-', multiply: '*', divide: '/'};
 
         let operand_buttons = [];
-        for (let i in Object.keys(operands)) {
-            const op = Object.keys(operands)[i];
+        for (let i in Object.keys(CONSTANTS.operands)) {
+            const op = Object.keys(CONSTANTS.operands)[i];
             operand_buttons.push(
-                <Operand key={op} id={op} operand={operands[op]} />
+                <Operand key={op} id={op} operand={CONSTANTS.operands[op]} />
             )
         }
         
         let number_buttons = [];
-        for (let i = constants.length - 1; i >= 0; i--) {
+        for (let i = CONSTANTS.numbers.length - 1; i >= 0; i--) {
             number_buttons.push(
-                <Button key={constants[i]} number={i} />
+                <Button key={CONSTANTS.numbers[i]} number={i} />
             );
         }
 
@@ -39,22 +37,17 @@ export default class Calculator extends Component {
                     {this.state.displayText}
                 </div>
 
-                <div id="operands">
+                <div id="buttons">
                     {operand_buttons}
-                </div>
 
-                <div id="number-buttons">
                     <div id="equals" className="button">
                         =
                     </div>
                     {number_buttons}
-                </div>
-
-                <div id="clear">
-                    clear
-                </div>
-                <div id="decimal">
-                    .
+                    <div id="decimal" className="button">
+                        .
+                    </div>
+                    <Clear />
                 </div>
             </div>
         );

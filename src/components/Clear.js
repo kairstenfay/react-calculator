@@ -9,8 +9,8 @@ export default class Operand extends Component {
     render() {
 
         return (
-            <div id={this.props.op} className="button operand">
-                {this.props.operand}
+            <div id="clear" className="button">
+                c
             </div>
         );
     }

@@ -15,7 +15,7 @@
   font-size: 1.8em;
 }
 
-#number-buttons {
+#buttons {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
@@ -23,7 +23,7 @@
 
 #equals {
   grid-column: 4;
-  grid-row: 1 / 4;
+  grid-row: 2 / 6;
 }
 
 #display {
@@ -34,7 +34,7 @@
   border-top-right-radius: 5px;
 }
 
-#operands {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+.operand {
+  background: ghostwhite;
+  border-color: grey;
 }
