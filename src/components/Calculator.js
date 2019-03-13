@@ -28,11 +28,11 @@ export default class Calculator extends Component {
     displayNumber(e) {
         if (this.state.displayText !== 0) {
             this.setState({
-                displayText: "" + this.state.displayText + CONSTANTS.numbers.indexOf(e.target.id)
+                displayText: "" + this.state.displayText + CONSTANTS.numbers[e.target.id]
             });
         } else {
             this.setState({
-                displayText: CONSTANTS.numbers.indexOf(e.target.id)
+                displayText: CONSTANTS.numbers[e.target.id]
             })
         }
 
@@ -44,9 +44,10 @@ export default class Calculator extends Component {
      */
      buildNumberButtons() {
         let number_buttons = [];
-        for (let i = CONSTANTS.numbers.length - 1; i >= 0; i--) {
+        for (let i in Object.keys(CONSTANTS.numbers)) {
+            let num = Object.keys(CONSTANTS.numbers)[i];
             number_buttons.push(
-                <Button key={CONSTANTS.numbers[i]} text={CONSTANTS.numbers[i]} number={i}
+                <Button key={num} text={num} number={CONSTANTS.numbers[num]}
                         eventHandler={this.displayNumber} />
             );
         }
