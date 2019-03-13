@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export default class Button extends Component {
+export default class Operand extends Component {
 
     constructor(props) {
         super(props);
@@ -9,8 +9,8 @@ export default class Button extends Component {
     render() {
 
         return (
-            <div className="button" id={this.props.text}>
-                {this.props.number}
+            <div className="button operand" id={this.props.op}>
+                {this.props.operand}
             </div>
         );
     }
