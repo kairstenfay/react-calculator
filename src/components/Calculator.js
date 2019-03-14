@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Operand from '../components/Operand';
 import Button from '../components/Button';
 import Clear from '../components/Clear';
+import Equals from '../components/Equals';
 const CONSTANTS = require('../constants.js');
 
 export default class Calculator extends Component {
@@ -9,7 +10,8 @@ export default class Calculator extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            current: 0,
+            display: 0,
+            current: false,
             storage: false,
             operand: false,
         };
@@ -25,24 +27,36 @@ export default class Calculator extends Component {
      */
     clearState() {
         this.setState({
-            current: 0,
+            display: 0,
+            current: false,
             storage: false,
             operand: false
         })
     }
 
-    displayNumber(e) {
-        let current = this.state.current;
+    /**
+     * Used in Equals component
+     * @param e
+     */
+    equals(e) {
+        this.doMath(e);
+    }
 
+    displayNumber(e) {
         // handle start case
-        if (current === 0) {  // if display is currently 0
+        let numberPressed = CONSTANTS.numbers[e.target.id];
+
+        if (!this.state.current || this.state.operand) {  // if display is currently 0
             this.setState({
-                current: CONSTANTS.numbers[e.target.id]
+                current: numberPressed,
+                display: numberPressed
             })
 
         } else {
+            let updatedValue = "" + this.state.current + numberPressed;
             this.setState({
-                current: "" + current + CONSTANTS.numbers[e.target.id]
+                current: updatedValue,
+                display: updatedValue
             });
         }
     }
@@ -52,6 +66,7 @@ export default class Calculator extends Component {
      * @param e
      */
     doMath(e) {
+        console.log(this.state);
 
         if (!this.state.operand) {  // move to storage
             this.setState({
@@ -69,6 +84,7 @@ export default class Calculator extends Component {
             this.setState({
                 storage: updatedStorage,
                 current: updatedStorage,
+                display: updatedStorage,
                 operand: e.target.id,
             })
 
@@ -114,15 +130,12 @@ export default class Calculator extends Component {
         return (
             <div id="calculator">
                 <div id="display">
-                    {this.state.current}
+                    {this.state.display}
                 </div>
 
                 <div id="buttons">
                     {this.buildOperandButtons()}
-
-                    <div id="equals" className="button">
-                        =
-                    </div>
+                    <Equals eventHandler={this.equals} />
                     {this.buildNumberButtons()}
                     <div id="decimal" className="button">
                         .
