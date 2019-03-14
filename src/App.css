@@ -8,7 +8,6 @@
 
 #calculator {
   width: 80vw;
-  max-width: 350px;
   border: 1px solid grey;
   border-right: 2px solid darkgrey;
   border-bottom: 2px solid darkgrey;
@@ -46,6 +45,7 @@
   margin-bottom: 3px;
   background-color: white;
   margin-left: -2px;
+  overflow-x: hidden;
 }
 
 .operand {

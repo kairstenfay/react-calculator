@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export default class Operand extends Component {
+export default class Operator extends Component {
 
 
     render() {

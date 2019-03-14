@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Operand from '../components/Operand';
+import Operator from './Operator';
 import Button from '../components/Button';
 import Clear from '../components/Clear';
 import Equals from '../components/Equals';
@@ -53,6 +53,8 @@ export default class Calculator extends Component {
                 display: numberPressed
             })
 
+        } else if (e.target.id === 'decimal' && this.state.current.toString().includes('.')) {
+            return;
         } else {
             let updatedValue = "" + this.state.current + numberPressed;
             this.setState({
@@ -78,12 +80,6 @@ export default class Calculator extends Component {
                 current: false
             });
         } else {  // do math on existing stored data
-            let solve = CONSTANTS.equations[this.state.operand];
-
-            // if (!solve) {
-            //     console.log("the stored operand must be '='");
-            //     return;
-            // }
 
             if (!this.state.current) {
                 console.log("there's nothing to operate on");
@@ -92,6 +88,8 @@ export default class Calculator extends Component {
                 });
                 return;
             }
+
+            let solve = CONSTANTS.equations[this.state.operand];
 
             console.log(solve);
             console.log(this.state.storage + " " + this.state.operand + " " + this.state.current);
@@ -134,8 +132,8 @@ export default class Calculator extends Component {
         for (let i in Object.keys(CONSTANTS.operands)) {
             const op = Object.keys(CONSTANTS.operands)[i];
             operand_buttons.push(
-                <Operand key={op} text={op} operand={CONSTANTS.operands[op]}
-                         eventHandler={this.doMath} />
+                <Operator key={op} text={op} operand={CONSTANTS.operands[op]}
+                          eventHandler={this.doMath} />
             )
         }
         return operand_buttons;
@@ -153,9 +151,6 @@ export default class Calculator extends Component {
                     {this.buildOperandButtons()}
                     <Equals eventHandler={this.equals} />
                     {this.buildNumberButtons()}
-                    <div id="decimal" className="button">
-                        .
-                    </div>
                     <Clear eventHandler={this.clearState} />
                 </div>
             </div>
