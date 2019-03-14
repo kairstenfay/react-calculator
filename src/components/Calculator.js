@@ -62,6 +62,7 @@ export default class Calculator extends Component {
         }
     }
 
+
     /**
      * Assumes the targeted button is a math operand (e.g. +, -, *, or /)
      * @param e
@@ -79,11 +80,18 @@ export default class Calculator extends Component {
         } else {  // do math on existing stored data
             let solve = CONSTANTS.equations[this.state.operand];
 
-            if (!solve) {
-                console.log("the stored operand must be '='");
+            // if (!solve) {
+            //     console.log("the stored operand must be '='");
+            //     return;
+            // }
+
+            if (!this.state.current) {
+                console.log("there's nothing to operate on");
+                this.setState({
+                    operand: e.target.id,
+                });
                 return;
             }
-
 
             console.log(solve);
             console.log(this.state.storage + " " + this.state.operand + " " + this.state.current);
