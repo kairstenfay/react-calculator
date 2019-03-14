@@ -8,10 +8,18 @@
 
 #calculator {
   width: 80vw;
+  max-width: 350px;
+  border: 1px solid grey;
+  border-right: 2px solid darkgrey;
+  border-bottom: 2px solid darkgrey;
+  padding: 16px 8px 6px 10px;
+  background-color: lightgrey;
+  border-radius: 15px 15px 5px 10px;
 }
 
 .button {
-  border: 1px solid slateblue;
+  border: 1px solid darkslateblue;
+  background-color: #e0ccff;
   font-size: 1.8em;
 }
 
@@ -19,22 +27,32 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
+  grid-gap: 3px;
 }
 
 #equals {
   grid-column: 4;
   grid-row: 2 / 6;
+  background-color: aquamarine;
+  border-color: mediumaquamarine;
 }
 
 #display {
-  border: 1px solid black;
+  border: 1px solid grey;
   text-align: right;
   font-size: 2.5em;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
+  margin-bottom: 3px;
+  background-color: white;
+  margin-left: -2px;
 }
 
 .operand {
-  background: ghostwhite;
+  background: whitesmoke;
   border-color: grey;
+}
+
+body {
+  background-color: ghostwhite;
 }
