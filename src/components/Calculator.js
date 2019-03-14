@@ -46,7 +46,7 @@ export default class Calculator extends Component {
         // handle start case
         let numberPressed = CONSTANTS.numbers[e.target.id];
 
-        if (!this.state.current || this.state.operand) {  // if display is currently 0
+        if (!this.state.current) {
             this.setState({
                 current: numberPressed,
                 display: numberPressed
@@ -72,7 +72,7 @@ export default class Calculator extends Component {
             this.setState({
                 operand: e.target.id,
                 storage: this.state.current,
-                current: 0
+                current: false
             });
         } else {  // do math on existing stored data
             let solve = CONSTANTS.equations[this.state.operand];
@@ -83,7 +83,7 @@ export default class Calculator extends Component {
             let updatedStorage = solve(this.state.storage, this.state.current);
             this.setState({
                 storage: updatedStorage,
-                current: updatedStorage,
+                current: false,
                 display: updatedStorage,
                 operand: e.target.id,
             })
