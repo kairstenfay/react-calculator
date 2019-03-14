@@ -70,14 +70,20 @@ export default class Calculator extends Component {
         console.log(this.state);
 
         if (!this.state.operand) {  // move to storage
+            console.log("no current operand in storage");
             this.setState({
                 operand: e.target.id,
                 storage: this.state.current,
                 current: false
             });
         } else {  // do math on existing stored data
-            console.log(this.state.operand);
             let solve = CONSTANTS.equations[this.state.operand];
+
+            if (!solve) {
+                console.log("the stored operand must be '='");
+                return;
+            }
+
 
             console.log(solve);
             console.log(this.state.storage + " " + this.state.operand + " " + this.state.current);
