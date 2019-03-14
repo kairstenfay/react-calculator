@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Operator from './Operator';
 import Clear from '../components/Clear';
 import Equals from '../components/Equals';
 import actions from '../actions/calculatorActions';
@@ -13,13 +12,13 @@ export default class Calculator extends Component {
             display: 0,
             current: false,
             storage: false,
-            operand: false,
+            operator: false,
         };
         this.clearState = this.clearState.bind(this);
         this.displayNumber = this.displayNumber.bind(this);
-        this.buildOperandButtons = this.buildOperandButtons.bind(this);
         this.doMath = this.doMath.bind(this);
         this.equals = this.equals.bind(this);
+        this.determineEquation = this.determineEquation.bind(this);
     }
 
     /**
@@ -30,7 +29,7 @@ export default class Calculator extends Component {
             display: 0,
             current: false,
             storage: false,
-            operand: false
+            operator: false
         })
     }
 
@@ -39,11 +38,16 @@ export default class Calculator extends Component {
      * @param e
      */
     equals(e) {
-        this.doMath(e);
+        if (this.state.operator && this.state.operator !== 'equals') {
+            this.doMath(e);
+        }
     }
 
     displayNumber(e) {
-        // handle start case
+        if (e.target.id === 'decimal' && this.state.current.toString().includes('.')) {
+            return;
+        }
+
         let numberPressed = CONSTANTS.numbers[e.target.id];
 
         if (!this.state.current) {
@@ -52,8 +56,6 @@ export default class Calculator extends Component {
                 display: numberPressed
             })
 
-        } else if (e.target.id === 'decimal' && this.state.current.toString().includes('.')) {
-            return;
         } else {
             let updatedValue = "" + this.state.current + numberPressed;
             this.setState({
@@ -63,64 +65,55 @@ export default class Calculator extends Component {
         }
     }
 
+    /**
+     * Determines which function to use among addition, multiplication, subtraction, and division
+     * based on the given event and the current stored operator in state.
+     *
+     * @param e
+     * @returns {*}
+     */
+    determineEquation(e) {
+        let solve;
+        if (this.state.operator === 'equals') {
+            this.setState({
+                operator: e.target.id,
+            });
+            solve = CONSTANTS.equations[e.target.id];
+        } else {
+            solve = CONSTANTS.equations[this.state.operator];
+        }
+        return solve;
+    }
 
     /**
-     * Assumes the targeted button is a math operand (e.g. +, -, *, or /)
+     * Assumes the targeted button is a math operator (e.g. +, -, *, or /)
      * @param e
      */
     doMath(e) {
-        console.log(this.state);
-
-        if (!this.state.operand) {  // move to storage
+        if (!this.state.operator) {  // move to storage
             this.setState({
-                operand: e.target.id,
+                operator: e.target.id,
                 storage: this.state.current,
                 current: false
             });
         } else {  // do math on existing stored data
-
-            if (!this.state.current) {
+            if (!this.state.current) {  // just store the new operator
                 this.setState({
-                    operand: e.target.id,
+                    operator: e.target.id,
                 });
                 return;
             }
 
-            let solve = CONSTANTS.equations[this.state.operand];
-            if (!solve) {
-                // equals is stored
-                this.setState({
-                    operand: e.target.id,
-                })
-            }
-
+            let solve = this.determineEquation(e);
             let updatedStorage = solve(this.state.storage, this.state.current);
+
             this.setState({
                 storage: updatedStorage,
                 current: false,
                 display: updatedStorage,
-                operand: e.target.id,
+                operator: e.target.id,
             })
-
         }
-    }
-
-
-
-    /**
-     * Move to actions
-     * @returns {Array}
-     */
-    buildOperandButtons() {
-        let operand_buttons = [];
-        for (let i in Object.keys(CONSTANTS.operands)) {
-            const op = Object.keys(CONSTANTS.operands)[i];
-            operand_buttons.push(
-                <Operator key={op} text={op} operand={CONSTANTS.operands[op]}
-                          eventHandler={this.doMath} />
-            )
-        }
-        return operand_buttons;
     }
 
     render() {
@@ -132,7 +125,7 @@ export default class Calculator extends Component {
                 </div>
 
                 <div id="buttons">
-                    {this.buildOperandButtons()}
+                    {actions.buildOperatorButtons(this.doMath)}
                     <Equals eventHandler={this.equals} />
                     {actions.buildNumberButtons(this.displayNumber)}
                     <Clear eventHandler={this.clearState} />
@@ -140,7 +133,4 @@ export default class Calculator extends Component {
             </div>
         );
     }
-
 }
-
-

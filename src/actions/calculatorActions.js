@@ -1,10 +1,10 @@
 import Button from '../components/Button';
+import Operator from '../components/Operator';
 import React from 'react';
 const CONSTANTS = require('../constants.js');
 
 
 /**
- * Move to actions
  * @returns {Array}
  */
 function buildNumberButtons(displayNumber) {
@@ -20,4 +20,20 @@ function buildNumberButtons(displayNumber) {
     return number_buttons;
 }
 
-export default {buildNumberButtons}
+/**
+ * @returns {Array}
+ */
+function buildOperatorButtons(doMath) {
+    let operand_buttons = [];
+    for (let i in Object.keys(CONSTANTS.operands)) {
+        const op = Object.keys(CONSTANTS.operands)[i];
+        operand_buttons.push(
+            <Operator key={op} text={op} operand={CONSTANTS.operands[op]}
+                      eventHandler={doMath} />
+        )
+    }
+    return operand_buttons;
+}
+
+
+export default {buildNumberButtons, buildOperatorButtons}
