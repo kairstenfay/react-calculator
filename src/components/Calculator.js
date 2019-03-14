@@ -90,6 +90,12 @@ export default class Calculator extends Component {
             }
 
             let solve = CONSTANTS.equations[this.state.operand];
+            if (!solve) {
+                // equals is stored
+                this.setState({
+                    operand: e.target.id,
+                })
+            }
 
             console.log(solve);
             console.log(this.state.storage + " " + this.state.operand + " " + this.state.current);

@@ -1,13 +1,23 @@
+@import url('https://fonts.googleapis.com/css?family=ZCOOL+QingKe+HuangYou');
+
 .App {
   text-align: center;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   padding: 40px;
+  font-family: 'ZCOOL QingKe HuangYou', cursive;
+  align-items: center;
+}
+
+header {
+  font-size: 2.8em;
+  padding: 10px;
 }
 
 #calculator {
-  width: 80vw;
+  width: 70vw;
+  max-width: 300px;
   border: 1px solid grey;
   border-right: 2px solid darkgrey;
   border-bottom: 2px solid darkgrey;
@@ -20,6 +30,8 @@
   border: 1px solid darkslateblue;
   background-color: #e0ccff;
   font-size: 1.8em;
+  padding: 2px;
+  border-radius: 2px;
 }
 
 #buttons {
