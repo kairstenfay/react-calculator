@@ -73,7 +73,6 @@ export default class Calculator extends Component {
         console.log(this.state);
 
         if (!this.state.operand) {  // move to storage
-            console.log("no current operand in storage");
             this.setState({
                 operand: e.target.id,
                 storage: this.state.current,
@@ -82,7 +81,6 @@ export default class Calculator extends Component {
         } else {  // do math on existing stored data
 
             if (!this.state.current) {
-                console.log("there's nothing to operate on");
                 this.setState({
                     operand: e.target.id,
                 });
@@ -97,9 +95,6 @@ export default class Calculator extends Component {
                 })
             }
 
-            console.log(solve);
-            console.log(this.state.storage + " " + this.state.operand + " " + this.state.current);
-            console.log(solve(this.state.storage, this.state.current));
             let updatedStorage = solve(this.state.storage, this.state.current);
             this.setState({
                 storage: updatedStorage,

@@ -1,16 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class Operator extends Component {
+const Operator = function(props) {
 
+    return (
+        <div id={props.text} className="button operand" onClick={props.eventHandler}>
+            {props.operand}
+        </div>
+    );
+};
 
-    render() {
-
-        return (
-            <div id={this.props.text} className="button operand"
-                 onClick={this.props.eventHandler}>
-                {this.props.operand}
-            </div>
-        );
-    }
-
-}
+export default Operator;

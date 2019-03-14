@@ -1,14 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class Operand extends Component {
+const Clear = function(props) {
 
-    render() {
+    return (
+        <div id="clear" className="button" onClick={props.eventHandler}>
+            C
+        </div>
+    );
+};
 
-        return (
-            <div id="clear" className="button" onClick={this.props.eventHandler}>
-                C
-            </div>
-        );
-    }
-
-}
+export default Clear;
