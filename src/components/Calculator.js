@@ -20,6 +20,7 @@ export default class Calculator extends Component {
         this.buildNumberButtons = this.buildNumberButtons.bind(this);
         this.buildOperandButtons = this.buildOperandButtons.bind(this);
         this.doMath = this.doMath.bind(this);
+        this.equals = this.equals.bind(this);
     }
 
     /**
@@ -75,6 +76,7 @@ export default class Calculator extends Component {
                 current: false
             });
         } else {  // do math on existing stored data
+            console.log(this.state.operand);
             let solve = CONSTANTS.equations[this.state.operand];
 
             console.log(solve);
