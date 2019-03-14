@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Operator from './Operator';
-import Button from '../components/Button';
 import Clear from '../components/Clear';
 import Equals from '../components/Equals';
+import actions from '../actions/calculatorActions';
 const CONSTANTS = require('../constants.js');
 
 export default class Calculator extends Component {
@@ -17,7 +17,6 @@ export default class Calculator extends Component {
         };
         this.clearState = this.clearState.bind(this);
         this.displayNumber = this.displayNumber.bind(this);
-        this.buildNumberButtons = this.buildNumberButtons.bind(this);
         this.buildOperandButtons = this.buildOperandButtons.bind(this);
         this.doMath = this.doMath.bind(this);
         this.equals = this.equals.bind(this);
@@ -106,23 +105,7 @@ export default class Calculator extends Component {
         }
     }
 
-    /**
-     * Move to actions
-     * @returns {Array}
-     *
-     * TODO make more readable
-     */
-     buildNumberButtons() {
-        let number_buttons = [];
-        for (let i in Object.keys(CONSTANTS.numbers)) {
-            let num = Object.keys(CONSTANTS.numbers)[i];
-            number_buttons.push(
-                <Button key={num} text={num} number={CONSTANTS.numbers[num]}
-                        eventHandler={this.displayNumber} />
-            );
-        }
-        return number_buttons;
-    }
+
 
     /**
      * Move to actions
@@ -151,7 +134,7 @@ export default class Calculator extends Component {
                 <div id="buttons">
                     {this.buildOperandButtons()}
                     <Equals eventHandler={this.equals} />
-                    {this.buildNumberButtons()}
+                    {actions.buildNumberButtons(this.displayNumber)}
                     <Clear eventHandler={this.clearState} />
                 </div>
             </div>
